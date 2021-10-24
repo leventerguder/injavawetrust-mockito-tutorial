@@ -7,19 +7,24 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 public class Test13SpyingOnRealObject {
 
 	public static void main(String[] args) {
 
-		// You can create spies of real objects. When you use the spy then the real
-		// methods are called (unless a method was stubbed).
-		// Real spies should be used carefully and occasionally, for example when
-		// dealing with legacy code.
+		/*
+		 * You can create spies of real objects. When you use the spy then the real
+		 * methods are called (unless a method was stubbed).
+		 * 
+		 * Real spies should be used carefully and occasionally, for example when
+		 * dealing with legacy code.
+		 * 
+		 * Spying on real objects can be associated with "partial mocking" concept.
+		 */
 
 		List<String> list = new LinkedList<>();
 		List<String> spy = spy(list);
-
 		// optionally, you can stub out some methods:
 		when(spy.size()).thenReturn(100);
 
@@ -29,6 +34,7 @@ public class Test13SpyingOnRealObject {
 
 		// prints "one" - the first element of a list
 		System.out.println(spy.get(0));
+		System.out.println(spy.get(1));
 
 		// size() method was stubbed - 100 is printed
 		System.out.println(spy.size());
@@ -48,23 +54,27 @@ public class Test13SpyingOnRealObject {
 		// IndexOutOfBoundsException (the list is yet empty)
 
 		try {
-			when(spy2.get(0)).thenReturn("foo");
-
+			when(spy2.get(0)).thenReturn("foo"); // syp2 list is empty!
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		// You have to use doReturn() for stubbing
 
+		// You have to use doReturn() for stubbing
 		System.out.println(doReturn("foo").when(spy2).get(0));
 
 		/*
 		 * Mockito *does not* delegate calls to the passed real instance, instead it
-		 * actually creates a copy of it. So if you keep the real instance and interact
-		 * with it, don't expect the spied to be aware of those interaction and their
-		 * effect on real instance state.
+		 * actually creates a copy of it.
 		 * 
-		 */
-
-		/*
+		 * So if you keep the real instance and interact with it, don't expect the spied
+		 * to be aware of those interaction and their effect on real instance state.
+		 * 
+		 * 
+		 * The corollary is that when an *unstubbed* method is called *on the spy* but
+		 * *not on the real instance*, you won't see any effects on the real instance.
+		 * 
+		 * 
+		 * 
 		 * Watch out for final methods. Mockito doesn't mock final methods so the bottom
 		 * line is: when you spy on real objects + you try to stub a final method =
 		 * trouble. Also you won't be able to verify those method as well.

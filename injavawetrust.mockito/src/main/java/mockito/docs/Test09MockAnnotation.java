@@ -7,34 +7,51 @@ public class Test09MockAnnotation {
 
 	public static void main(String[] args) {
 
-		InitializeMock initializeMock = new InitializeMock();
-		MockitoAnnotations.initMocks(initializeMock);
-		// MockitoAnnotations.initMocks(this); initializes fields annotated with Mockito
-		// annotations.
+		/*
+		 * Shorthand for mocks creation - @Mock annotation
+		 * 
+		 * - Minimizes repetitive mock creation code.
+		 * 
+		 * - Makes the test class more readable.
+		 * 
+		 * - Makes the verification error easier to read because the field name is used
+		 * to identify the mock
+		 */
 
-		// Initializes objects annotated with Mockito annotations for given testClass:
-		// @Mock, @Spy, @Captor, @InjectMocks
+		ArticleManagerTest articleManagerTest = new ArticleManagerTest();
 
-		// Allows shorthand creation of objects required for testing.
-		// Minimizes repetitive mock creation code.
-		// Makes the test class more readable.
-		// Makes the verification error easier to read because field name is used to
-		// identify the mock
+		// Deprecetad
+		// MockitoAnnotations.initMocks(articleManagerTest);
 
-		initializeMock.setManager(new ArticleManager(initializeMock.getCalculator(), initializeMock.getDatabase(),
-				initializeMock.getUserProvider()));
+		/*
+		 * Initializes objects annotated with Mockito annotations for given
+		 * testClass: @org.mockito.Mock, @Spy, @Captor, @InjectMocks
+		 */
+		MockitoAnnotations.openMocks(articleManagerTest);
 
-		System.out.println(initializeMock.getCalculator());
+		ArticleCalculator mockedCalculator = articleManagerTest.getCalculator();
+		ArticleDatabase mockedDatabase = articleManagerTest.getDatabase();
+		UserProvider mockedUserProvider = articleManagerTest.getUserProvider();
 
-		System.out.println(initializeMock.getDatabase());
-		System.out.println(initializeMock.getUserProvider());
-		System.out.println(initializeMock.getManager());
+		articleManagerTest.setManager(new ArticleManager(mockedCalculator, mockedDatabase, mockedUserProvider));
+
+		System.out.println(mockedCalculator + "" + mockedCalculator.getClass());
+		System.out.println(mockedDatabase + "" + mockedDatabase.getClass());
+		System.out.println(mockedUserProvider + "" + mockedUserProvider.getClass());
+
+		System.out.println(articleManagerTest.getManager());
+
 	}
 }
 
-class InitializeMock {
+/*
+ * ArticleManager needs ArticleCalculator , ArticleDatabase , UserProvider.
+ */
+class ArticleManagerTest {
+
 	@Mock
 	private ArticleCalculator calculator;
+
 	@Mock
 	private ArticleDatabase database;
 
@@ -78,6 +95,7 @@ class InitializeMock {
 }
 
 class ArticleManager {
+
 	private ArticleCalculator calculator;
 	private ArticleDatabase database;
 	private UserProvider userProvider;
