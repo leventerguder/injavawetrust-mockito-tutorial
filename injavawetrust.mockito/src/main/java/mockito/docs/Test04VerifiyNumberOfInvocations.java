@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 public class Test04VerifiyNumberOfInvocations {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
 		LinkedList<String> mockedList = mock(LinkedList.class);
@@ -22,6 +23,9 @@ public class Test04VerifiyNumberOfInvocations {
 
 		// following two verifications work exactly the same - times(1) is used by
 		// default
+
+		// times(1) is the default. Therefore using times(1) explicitly can be omitted
+
 		verify(mockedList).add("once");
 		verify(mockedList, times(1)).add("once");
 

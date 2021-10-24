@@ -6,13 +6,14 @@ import java.util.LinkedList;
 
 public class Test05StubbingWithException {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
 		LinkedList<String> mockedList = mock(LinkedList.class);
 
 		doThrow(new RuntimeException()).when(mockedList).clear();
-		
-		//following throws RuntimeException
+
+		// following throws RuntimeException
 		mockedList.clear();
 	}
 }

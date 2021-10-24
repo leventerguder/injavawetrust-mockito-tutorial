@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 
 public class Test02 {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
 		// you can mock concrete classes , not just interfaces
@@ -24,17 +25,20 @@ public class Test02 {
 
 		try {
 			System.out.println(mockedList.get(1));
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
+			e.printStackTrace();
 		}
 
 		// following prints "null" because get(999) was not stubbed
 		System.out.println(mockedList.get(999));
 
-		// Although it is possible to verify a stubbed invocation, usually it's just
-		// redundant
-		// If your code cares what get(0) returns, then something else breaks (often
-		// even before verify() gets executed).
-		// If your code doesn't care what get(0) returns, then it should not be stubbed.
+		/*
+		 * Although it is possible to verify a stubbed invocation, usually it's just
+		 * redundant If your code cares what get(0) returns, then something else breaks
+		 * (often even before verify() gets executed). If your code doesn't care what
+		 * get(0) returns, then it should not be stubbed.
+		 */
+
 		verify(mockedList).get(0);
 
 		/*

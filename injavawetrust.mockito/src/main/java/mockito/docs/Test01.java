@@ -6,6 +6,7 @@ import java.util.List;
 
 public class Test01 {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
 		/*
@@ -21,12 +22,10 @@ public class Test01 {
 
 		// using mock object
 		mockedList.add("one");
-		System.out.println(mockedList.size());
 		mockedList.clear();
 
 		// verification
 		verify(mockedList).add("one");
-		verify(mockedList).clear();
 		verify(mockedList).clear();
 
 		/*
