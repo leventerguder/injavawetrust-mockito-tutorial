@@ -1,25 +1,28 @@
 package mockito;
 
-import org.junit.Before;
-import org.junit.Test;
+
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class MockitoSpyAnnotationExample {
 
 	@Spy
 	Utils mockUtils;
 
-	@Before
+	@BeforeEach
 	public void setuo() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 	}
 
 	@Test
 	public void setup() {
+		
 		when(mockUtils.process(1, 4)).thenReturn(5);
 
 		// //mocked method

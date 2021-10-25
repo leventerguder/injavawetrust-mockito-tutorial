@@ -2,10 +2,10 @@ package mockito;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class MockitoMockMethodExample {
@@ -19,9 +19,12 @@ public class MockitoMockMethodExample {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void test() {
+
 		// using Mockito.mock() method
 		List<String> mockList = mock(List.class);
 		when(mockList.size()).thenReturn(5);
+		
 		assertTrue(mockList.size() == 5);
+
 	}
 }

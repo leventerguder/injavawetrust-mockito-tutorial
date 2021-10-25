@@ -1,35 +1,36 @@
 package mockito;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import mockito.AddService;
-import mockito.CalcService;
-
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+// The below example shows the usage of @Mock annotation.
 
 public class CalcService2Test {
 
-	CalcService calcService;
+	private CalcService calcService;
 
 	@Mock
-	AddService addService;
+	private AddService addService;
 
-	@Before
+	@BeforeEach
 	public void setup() {
-		MockitoAnnotations.initMocks(this);
-		
-		// Note that we need to call MockitoAnnotations.initMocks(this); to initialize objects annotated with @Mock , @Spy , @Captor , or @InjectMocks
+
+		// MockitoAnnotations.initMocks(this); // deprecated
+		MockitoAnnotations.openMocks(this);
+
+		// Note that we need to call MockitoAnnotations.openMocks(this); to initialize
+		// objects annotated with @Mock , @Spy , @Captor , or @InjectMocks
 	}
 
 	@Test
 	public void testCalc() {
+		
 		System.out.println("**--- Test testCalc executed ---**");
 
 		calcService = new CalcService(addService);

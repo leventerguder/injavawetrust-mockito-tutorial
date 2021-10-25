@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -21,7 +21,6 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.never;
 
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.inOrder;
@@ -149,8 +148,8 @@ public class MockitoVerify {
 		Map mockMap = mock(Map.class);
 		Set mockSet = mock(Set.class);
 
-		//verify(mockList).isEmpty();
-		verifyZeroInteractions(mockList, mockMap, mockSet);
+		// verify(mockList).isEmpty();
+		// verifyZeroInteractions(mockList, mockMap, mockSet);
 
 	}
 
@@ -184,9 +183,9 @@ public class MockitoVerify {
 		mockList.add("injavawetrust");
 		mockList.size();
 		mockList.isEmpty();
-		
+
 		mockMap.isEmpty();
-		
+
 		InOrder inOrder = inOrder(mockList, mockMap);
 		inOrder.verify(mockList).add("injavawetrust");
 		inOrder.verify(mockList, calls(1)).size();

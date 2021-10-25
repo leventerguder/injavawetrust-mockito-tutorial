@@ -1,13 +1,13 @@
 package mockito;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MockitoSpyMethodExample {
 
@@ -16,7 +16,6 @@ public class MockitoSpyMethodExample {
 	// unstubbed behaviors then we can create a spy object using Mockito spy()
 	// method.
 
-	
 	@Test
 	public void testSpy() {
 

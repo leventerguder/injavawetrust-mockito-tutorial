@@ -2,14 +2,22 @@ package mockito;
 
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 public class MockitoInjectMockAnnotationExample {
+
+	@BeforeEach
+	public void setup() {
+		// if we don't call below, we will get NullPointerException
+		MockitoAnnotations.openMocks(this);
+	}
 
 	// Mockito @InjectMocks Annotation
 	/*
@@ -20,7 +28,7 @@ public class MockitoInjectMockAnnotationExample {
 	 */
 
 	@Mock
-	List<String> mockList;
+	private List<String> names;
 
 	/*
 	 * @InjectMock creates an instance of the class and injects the mocks that are
@@ -28,16 +36,29 @@ public class MockitoInjectMockAnnotationExample {
 	 */
 
 	@InjectMocks
-	Fruits mockFruits;
+	private Fruits mockFruits;
 
 	@Test
 	public void test() {
-		when(mockList.get(0)).thenReturn("Apple");
-		when(mockList.size()).thenReturn(1);
+
+		when(names.get(0)).thenReturn("Apple");
+		when(names.size()).thenReturn(1);
+
+		assertEquals("Apple", names.get(0));
+		assertEquals(1, names.size());
+
+		// mockFruits names is using mockList, below asserts confirm it
+		assertEquals("Apple", mockFruits.getNames().get(0));
+		assertEquals(1, mockFruits.getNames().size());
+
+		names.add(1, "Mango");
+		// below will print null because mockList.get(1) is not stubbed
+		System.out.println(names.get(1));
 	}
 }
 
 class Fruits {
+
 	private List<String> names;
 
 	public List<String> getNames() {
