@@ -27,6 +27,12 @@ public class MockitoInjectMockAnnotationExample {
 	 * 
 	 */
 
+	/*
+	 * If there is only one matching mock object, then mockito will inject that into
+	 * the object. If there is more than one mocked object of the same class, then
+	 * mock object name is used to inject the dependencies.
+	 */
+
 	@Mock
 	private List<String> names;
 

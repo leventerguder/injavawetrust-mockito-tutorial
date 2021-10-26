@@ -1,8 +1,7 @@
-package verify;
+package mockito.verify;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
@@ -62,13 +61,15 @@ public class MockitoVerify {
 	 * 
 	 */
 
+	// Above verify method will pass if add("injavawetrust") is called only once on
+	// the mocked list object.
 	@Test
 	@SuppressWarnings("unchecked")
 	public void test() {
 
 		List<String> mockList = mock(List.class);
 		mockList.add("injavawetrust");
-		mockList.size();
+
 		verify(mockList).add("injavawetrust");
 
 	}
@@ -83,10 +84,9 @@ public class MockitoVerify {
 
 		List<String> mockList = mock(List.class);
 		mockList.add("injavawetrust");
-		mockList.size();
 
-		verify(mockList).add(anyString());
-		verify(mockList).add(any(String.class));
+		verify(mockList).add(anyString()); // ArgumentMatchers#anyString
+		verify(mockList).add(any(String.class)); // ArgumentMatchers#any
 	}
 
 	@Test
@@ -123,6 +123,11 @@ public class MockitoVerify {
 		 */
 
 		List<String> mockList = mock(List.class);
+		mockList.add("test");
+		mockList.remove(0);
+
+		verify(mockList).add("test");
+		verify(mockList).remove(0);
 
 		// all interactions are verified, so below will pass
 		verifyNoMoreInteractions(mockList);
@@ -132,31 +137,10 @@ public class MockitoVerify {
 		verifyNoMoreInteractions(mockList);
 	}
 
-	// verifyZeroInteractions()
-	@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
-	@Test
-	public void test5() {
-		/*
-		 * verifyZeroInteractions()
-		 * 
-		 * verifyZeroInteractions() method behavior is same as
-		 * verifyNoMoreInteractions() method.
-		 */
-
-		List<String> mockList = mock(List.class);
-
-		Map mockMap = mock(Map.class);
-		Set mockSet = mock(Set.class);
-
-		// verify(mockList).isEmpty();
-		// verifyZeroInteractions(mockList, mockMap, mockSet);
-
-	}
-
-	// Mockito verify only method call
+	// Mockito verify #only() method call
 	@SuppressWarnings({ "rawtypes" })
 	@Test
-	public void test6() {
+	public void test5() {
 		/*
 		 * If we want to verify that only one method is being called, then we can use
 		 * only() with verify method.
@@ -165,13 +149,15 @@ public class MockitoVerify {
 
 		Map mockMap = mock(Map.class);
 		mockMap.isEmpty();
+		// mockMap.put("key", "value"); // NoInteractionsWanted
 		verify(mockMap, only()).isEmpty();
 	}
 
 	// Mockito Verify Order of Invocation
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Test
-	public void test7() {
+	public void test6() {
 		/*
 		 * We can use InOrder to verify the order of invocation. We can skip any method
 		 * to verify, but the methods being verified must be invoked in the same order.
